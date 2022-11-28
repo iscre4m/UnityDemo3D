@@ -24,11 +24,13 @@ public class Sphere : MonoBehaviour
         }
         float fx = Input.GetAxis("Horizontal");
         float fy = Input.GetAxis("Vertical");
-        rigidBody.AddForce(new Vector3(fx, 0, fy));
 
         forceDirection = cam.transform.forward;
         forceDirection.y = 0;
-        forceDirection = forceDirection.normalized;
+        forceDirection = forceDirection.normalized * fy;
+        forceDirection += cam.transform.right * fx;
+
+        rigidBody.AddForce(forceDirection * FORCE_AMPL);
     }
 
     private void OnTriggerEnter(Collider other)

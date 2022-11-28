@@ -8,11 +8,11 @@ public class CameraMove : MonoBehaviour
     private Vector3 cam_sphere;
     private float zoom;
 
-    private const float MIN_ZOOM = .2f;
+    private const float MIN_ZOOM = 0;
     private const float MAX_ZOOM = 2;
     private const float ZOOM_SENS = 10;
     private const float MAX_VERTICAL = 75;
-    private const float MIN_VERTICAL = 35;
+    private const float MIN_VERTICAL = 25;
     private const float VERTICAL_SENS = 3;
     private const float HORIZONTAL_SENS = 5;
 
