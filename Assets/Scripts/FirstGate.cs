@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FirstGate : MonoBehaviour
 {
-    private const float TIMEOUT = 20;
+    private const float TIMEOUT = 15;
     private float timeout;
 
     void Start()
@@ -21,6 +21,9 @@ public class FirstGate : MonoBehaviour
             return;
         }
 
-        transform.localScale = new Vector3(timeout / TIMEOUT, timeout / TIMEOUT, transform.localScale.z);
+        transform.position = new Vector3(
+            transform.position.x,
+            transform.localScale.y * (-1/2f + timeout / TIMEOUT),
+            transform.position.z);
     }
 }

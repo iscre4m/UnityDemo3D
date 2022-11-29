@@ -20,16 +20,24 @@ public class FirstCheckpoint : MonoBehaviour
 
         if (countdownTime < 0)
         {
+            GameStat.SetFirstCheckpointStatus(false);
             gameObject.SetActive(false);
 
             return;
         }
 
+        GameStat.FirstCheckpointFill =
         countdown.fillAmount = countdownTime / START_TIME;
+        countdown.color = new Color(
+            1 - GameStat.FirstCheckpointFill,
+            GameStat.FirstCheckpointFill,
+            .1f
+        );
     }
 
     private void OnTriggerEnter(Collider other)
     {
         firstGate.SetActive(false);
+        GameStat.SetFirstCheckpointStatus(true);
     }
 }
