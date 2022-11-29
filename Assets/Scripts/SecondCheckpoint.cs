@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class SecondCheckpoint : MonoBehaviour
 {
+    private const float START_TIME = 10;
+    
     public static bool IsActivated;
 
     [SerializeField]
     private UnityEngine.UI.Image countdown;
-    private const float START_TIME = 25;
+    
     private float countdownTime;
     private GameObject secondGate;
+    private byte scoreValue = 15;
 
     void Start()
     {
         SecondCheckpoint.IsActivated = false;
         countdownTime = START_TIME;
+        secondGate = GameObject.Find("SecondGate");
     }
 
     void Update()
@@ -42,6 +46,8 @@ public class SecondCheckpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        secondGate.SetActive(false);
         GameStat.SetSecondCheckpointStatus(true);
+        GameStat.GameScore += scoreValue;
     }
 }

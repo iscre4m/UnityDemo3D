@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class GameStat : MonoBehaviour
 {
-    #region Clock & GameTime
+    #region Stats
     [SerializeField]
     private static TMPro.TextMeshProUGUI Clock;
+    [SerializeField]
+    private static TMPro.TextMeshProUGUI Score;
 
     private static float _gameTime;
+    private static byte _gameScore;
 
     public static float GameTime
     {
@@ -15,6 +18,16 @@ public class GameStat : MonoBehaviour
         {
             _gameTime = value;
             UpdateTime();
+        }
+    }
+
+    public static byte GameScore
+    {
+        get => _gameScore;
+        set
+        {
+            _gameScore = value;
+            UpdateScore();
         }
     }
     #endregion
@@ -35,6 +48,7 @@ public class GameStat : MonoBehaviour
     #endregion
 
     #region SecondCheckpoint
+
     private static UnityEngine.UI.Image SecondCheckpointImage;
     private static float _secondCheckpointFill;
 
@@ -49,17 +63,37 @@ public class GameStat : MonoBehaviour
     }
     #endregion
 
+    #region FinalCheckpoint
+    private static UnityEngine.UI.Image FinalCheckpointImage;
+    private static float _finalCheckpointFill;
+
+    public static float FinalCheckpointFill
+    {
+        get => _finalCheckpointFill;
+        set
+        {
+            _finalCheckpointFill = value;
+            UpdateFinalCheckpoint();
+        }
+    }
+    #endregion
+
     void Start()
     {
-        GameStat.Clock = GameObject.Find("Clock")
-        .GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        GameStat.FirstCheckpointImage = 
-        GameObject
+        GameStat.Clock = GameObject
+            .Find("Clock")
+            .GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        GameStat.Score = GameObject
+            .Find("Score")
+            .GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        GameStat.FirstCheckpointImage = GameObject
             .Find(nameof(FirstCheckpointImage))
             .GetComponent<UnityEngine.UI.Image>();
-        GameStat.SecondCheckpointImage = 
-        GameObject
+        GameStat.SecondCheckpointImage = GameObject
             .Find(nameof(SecondCheckpointImage))
+            .GetComponent<UnityEngine.UI.Image>();
+        GameStat.FinalCheckpointImage = GameObject
+            .Find(nameof(FinalCheckpointImage))
             .GetComponent<UnityEngine.UI.Image>();
     }
 
@@ -71,6 +105,11 @@ public class GameStat : MonoBehaviour
     private static void UpdateTime()
     {
         Clock.text = $"{(int)_gameTime / 60:00}:{_gameTime % 60:00.0}";
+    }
+
+    private static void UpdateScore()
+    {
+        Score.text = $"{_gameScore}";
     }
 
     private static void UpdateFirstCheckpoint()
@@ -99,6 +138,19 @@ public class GameStat : MonoBehaviour
         }
     }
 
+    private static void UpdateFinalCheckpoint()
+    {
+        if (FinalCheckpointFill >= 0 && FinalCheckpointFill <= 1)
+        {
+            FinalCheckpointImage.fillAmount = FinalCheckpointFill;
+            FinalCheckpointImage.color = new Color(
+                1 - FinalCheckpointFill,
+                FinalCheckpointFill,
+                .1f
+            );
+        }
+    }
+
     public static void SetFirstCheckpointStatus(bool status)
     {
         FirstCheckpointFill = 1;
@@ -109,5 +161,11 @@ public class GameStat : MonoBehaviour
     {
         SecondCheckpointFill = 1;
         SecondCheckpointImage.color = status ? Color.green : Color.red;
+    }
+
+    public static void SetFinalCheckpointStatus(bool status)
+    {
+        FinalCheckpointFill = 1;
+        FinalCheckpointImage.color = status ? Color.green : Color.yellow;
     }
 }

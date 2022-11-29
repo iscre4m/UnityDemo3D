@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class FirstCheckpoint : MonoBehaviour
 {
+    private const float START_TIME = 5;
+
     [SerializeField]
     private UnityEngine.UI.Image countdown;
-    private const float START_TIME = 5;
+    
     private float countdownTime;
     private GameObject firstGate;
+    private byte scoreValue = 5;
 
     void Start()
     {
@@ -39,5 +42,6 @@ public class FirstCheckpoint : MonoBehaviour
     {
         firstGate.SetActive(false);
         GameStat.SetFirstCheckpointStatus(true);
+        GameStat.GameScore += scoreValue;
     }
 }
