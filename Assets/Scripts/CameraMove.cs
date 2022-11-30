@@ -13,8 +13,8 @@ public class CameraMove : MonoBehaviour
     private const float ZOOM_SENS = 10;
     private const float MAX_VERTICAL = 75;
     private const float MIN_VERTICAL = 25;
-    private const float VERTICAL_SENS = 3;
-    private const float HORIZONTAL_SENS = 5;
+    private const float VERTICAL_SENS = 2;
+    private const float HORIZONTAL_SENS = 4;
 
     private float camAngleVertical;
     private float camAngleHorizontal;
@@ -31,7 +31,7 @@ public class CameraMove : MonoBehaviour
     {
         if (Input.mouseScrollDelta.y != 0)
         {
-            zoom -= Input.mouseScrollDelta.y / ZOOM_SENS;
+            zoom -= Input.mouseScrollDelta.y / ZOOM_SENS * Time.timeScale;
             if (zoom < MIN_ZOOM)
             {
                 zoom = MIN_ZOOM;
@@ -41,8 +41,12 @@ public class CameraMove : MonoBehaviour
                 zoom = MAX_ZOOM;
             }
         }
-        camAngleHorizontal += Input.GetAxis("Mouse X") * HORIZONTAL_SENS;
-        camAngleVertical -= Input.GetAxis("Mouse Y") * VERTICAL_SENS;
+
+        camAngleHorizontal += Input.GetAxis("Mouse X") *
+        HORIZONTAL_SENS * Time.timeScale;
+        camAngleVertical -= Input.GetAxis("Mouse Y") *
+        VERTICAL_SENS * Time.timeScale;
+
         if (camAngleVertical < MIN_VERTICAL)
         {
             camAngleVertical = MIN_VERTICAL;
