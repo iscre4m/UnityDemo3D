@@ -7,7 +7,7 @@ public class SecondCheckpoint : MonoBehaviour
     public static bool IsActivated;
 
     [SerializeField]
-    private UnityEngine.UI.Image countdown;
+    private UnityEngine.UI.Image Countdown;
     
     private float countdownTime;
     private GameObject secondGate;
@@ -35,8 +35,8 @@ public class SecondCheckpoint : MonoBehaviour
             }
 
             GameStat.SecondCheckpointFill =
-            countdown.fillAmount = countdownTime / START_TIME;
-            countdown.color = new Color(
+            Countdown.fillAmount = countdownTime / START_TIME;
+            Countdown.color = new Color(
                 1 - GameStat.SecondCheckpointFill,
                 GameStat.SecondCheckpointFill,
                 .1f

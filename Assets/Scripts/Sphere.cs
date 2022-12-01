@@ -9,7 +9,7 @@ public class Sphere : MonoBehaviour
     private const float FORCE_AMPL = 2;
 
     [SerializeField]
-    private GameObject cam;
+    private Camera Camera;
 
     void Start()
     {
@@ -25,10 +25,10 @@ public class Sphere : MonoBehaviour
         float fx = Input.GetAxis("Horizontal");
         float fy = Input.GetAxis("Vertical");
 
-        forceDirection = cam.transform.forward;
+        forceDirection = Camera.transform.forward;
         forceDirection.y = 0;
         forceDirection = forceDirection.normalized * fy;
-        forceDirection += cam.transform.right * fx;
+        forceDirection += Camera.transform.right * fx;
 
         rigidBody.AddForce(forceDirection * FORCE_AMPL);
     }

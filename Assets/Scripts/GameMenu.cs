@@ -55,7 +55,47 @@ public class GameMenu : MonoBehaviour
         MenuContainer.SetActive(true);
         Message.text = messageText;
         MenuButtonText.text = buttonText;
-        Stats.text = $"Time in game: {GameStat.GameTime:F1}";
+        Stats.text = $"Time in game: {GameStat.GameTime:F1}\n";
+        Stats.text += $"First checkpoint: ";
+        switch (GameStat.FirstCheckpointTime)
+        {
+            case -1:
+                Stats.text += "in progress\n";
+                break;
+            case 0:
+                Stats.text += "failed\n";
+                break;
+            default:
+                Stats.text += $"passed at {GameStat.FirstCheckpointTime:F1}\n";
+                break;
+        }
+        Stats.text += $"Second checkpoint: ";
+        switch (GameStat.SecondCheckpointTime)
+        {
+            case -1:
+                Stats.text += "in progress\n";
+                break;
+            case 0:
+                Stats.text += "failed\n";
+                break;
+            default:
+                Stats.text += $"passed at {GameStat.SecondCheckpointTime:F1}\n";
+                break;
+        }
+        Stats.text += $"Final checkpoint: ";
+        switch (GameStat.FinalCheckpointTime)
+        {
+            case -1:
+                Stats.text += "in progress\n";
+                break;
+            case 0:
+                Stats.text += "failed\n";
+                break;
+            default:
+                Stats.text += $"passed at {GameStat.FinalCheckpointTime:F1}\n";
+                break;
+        }
+        Stats.text += $"Score: {GameStat.GameScore}";
         Time.timeScale = 0;
     }
 

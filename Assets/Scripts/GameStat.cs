@@ -35,6 +35,7 @@ public class GameStat : MonoBehaviour
     #region FirstCheckpoint
     private static UnityEngine.UI.Image FirstCheckpointImage;
     private static float _firstCheckpointFill;
+    public static float FirstCheckpointTime = -1;
 
     public static float FirstCheckpointFill
     {
@@ -51,6 +52,7 @@ public class GameStat : MonoBehaviour
 
     private static UnityEngine.UI.Image SecondCheckpointImage;
     private static float _secondCheckpointFill;
+    public static float SecondCheckpointTime = -1;
 
     public static float SecondCheckpointFill
     {
@@ -66,6 +68,7 @@ public class GameStat : MonoBehaviour
     #region FinalCheckpoint
     private static UnityEngine.UI.Image FinalCheckpointImage;
     private static float _finalCheckpointFill;
+    public static float FinalCheckpointTime = -1;
 
     public static float FinalCheckpointFill
     {
@@ -153,18 +156,21 @@ public class GameStat : MonoBehaviour
 
     public static void SetFirstCheckpointStatus(bool status)
     {
+        FirstCheckpointTime = status ? _gameTime : 0;
         FirstCheckpointFill = 1;
         FirstCheckpointImage.color = status ? Color.green : Color.red;
     }
 
     public static void SetSecondCheckpointStatus(bool status)
     {
+        SecondCheckpointTime = status ? _gameTime : 0;
         SecondCheckpointFill = 1;
         SecondCheckpointImage.color = status ? Color.green : Color.red;
     }
 
     public static void SetFinalCheckpointStatus(bool status)
     {
+        FinalCheckpointTime = status ? _gameTime : 0;
         FinalCheckpointFill = 1;
         FinalCheckpointImage.color = status ? Color.green : Color.yellow;
     }
