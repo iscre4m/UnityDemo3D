@@ -66,5 +66,13 @@ public class CameraMove : MonoBehaviour
             camAngleHorizontal,
             0
         );
+
+        var headLight = GameObject.Find("HeadLight");
+
+        headLight.transform.eulerAngles = new Vector3(
+            40,
+            camAngleHorizontal,
+            0
+        );
     }
 }

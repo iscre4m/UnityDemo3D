@@ -1,11 +1,12 @@
 using UnityEngine;
+using System;
 
 public class GameMenu : MonoBehaviour
 {
     public static bool SoundsEnabled { get; private set; }
     public static float SoundsVolume { get; private set; }
 
-    private const string preferencesFilename = "preferences.txt";
+    private const string preferencesFilename = "Assets/Files/preferences.txt";
 
     private static GameObject MenuContainer;
     private static TMPro.TextMeshProUGUI Message;
@@ -14,26 +15,54 @@ public class GameMenu : MonoBehaviour
 
     private AudioSource backgroundMusic;
 
+    private bool musicEnabled;
+    private float musicVolume;
+
     void Start()
     {
-        MenuContainer = GameObject.Find(nameof(MenuContainer));
+        MenuContainer = GameObject
+            .Find(nameof(MenuContainer));
         Message = GameObject
-        .Find(nameof(Message))
-        .GetComponent<TMPro.TextMeshProUGUI>();
+            .Find(nameof(Message))
+            .GetComponent<TMPro.TextMeshProUGUI>();
         Stats = GameObject
-        .Find(nameof(Stats))
-        .GetComponent<TMPro.TextMeshProUGUI>();
+            .Find(nameof(Stats))
+            .GetComponent<TMPro.TextMeshProUGUI>();
         MenuButtonText = GameObject
-        .Find(nameof(MenuButtonText))
-        .GetComponent<TMPro.TextMeshProUGUI>();
+            .Find(nameof(MenuButtonText))
+            .GetComponent<TMPro.TextMeshProUGUI>();
 
         backgroundMusic = GetComponent<AudioSource>();
-        SoundsEnabled = GameObject
+
+        var MusicToggle = GameObject
+            .Find("MusicToggle")
+            .GetComponent<UnityEngine.UI.Toggle>();
+        var MusicVolumeSlider = GameObject
+            .Find("MusicVolumeSlider")
+            .GetComponent<UnityEngine.UI.Slider>();
+        var SoundsToggle = GameObject
             .Find("SoundsToggle")
-            .GetComponent<UnityEngine.UI.Toggle>().isOn;
-        SoundsVolume = GameObject
+            .GetComponent<UnityEngine.UI.Toggle>();
+        var SoundsVolumeSlider = GameObject
             .Find("SoundsVolumeSlider")
-            .GetComponent<UnityEngine.UI.Slider>().value;
+            .GetComponent<UnityEngine.UI.Slider>();
+
+        if (LoadPreferences())
+        {
+            MusicToggle.isOn = musicEnabled;
+            MusicVolumeSlider.value = musicVolume;
+            SoundsToggle.isOn = SoundsEnabled;
+            SoundsVolumeSlider.value = SoundsVolume;
+        }
+        else
+        {
+            musicEnabled = MusicToggle.isOn;
+            musicVolume = MusicVolumeSlider.value;
+            SoundsEnabled = SoundsToggle.isOn;
+            SoundsVolume = SoundsVolumeSlider.value;
+        }
+
+        UpdateMusicState();
 
         if (MenuContainer.activeInHierarchy)
         {
@@ -57,25 +86,26 @@ public class GameMenu : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        SavePreferences();
+    }
+
     #region Event Handlers
     public void MenuButtonClick()
     {
         GameMenu.Hide();
     }
 
-    public void MusicToggled(bool enabled)
+    public void MusicToggled(bool value)
     {
-        if (enabled) {
-            backgroundMusic.Play();
-
-            return;
-        }
-
-        backgroundMusic.Stop();
+        musicEnabled = value;
+        UpdateMusicState();
     }
 
     public void MusicVolumeChanged(float value) {
-        backgroundMusic.volume = value;
+        musicVolume = value;
+        UpdateMusicState();
     }
 
     public void SoundsToggled(bool enabled) {
@@ -86,6 +116,26 @@ public class GameMenu : MonoBehaviour
         GameMenu.SoundsVolume = value;
     }
     #endregion
+
+    private void UpdateMusicState()
+    {
+        backgroundMusic.volume = musicVolume;
+
+        if (musicEnabled)
+        {
+            if (!backgroundMusic.isPlaying)
+            {
+                backgroundMusic.Play();
+            }
+            
+            return;
+        }
+
+        if (backgroundMusic.isPlaying)
+        {
+            backgroundMusic.Stop();
+        }
+    }
 
     public static void Show(
         string messageText = "Game paused",
@@ -143,5 +193,37 @@ public class GameMenu : MonoBehaviour
     {
         MenuContainer.SetActive(false);
         Time.timeScale = 1;
+    }
+
+    private void SavePreferences()
+    {
+        System.IO.File.WriteAllText(preferencesFilename,
+            $"{musicEnabled};{musicVolume};" +
+            $"{GameMenu.SoundsEnabled};{GameMenu.SoundsVolume}"
+        );
+    }
+    private bool LoadPreferences()
+    {
+        if (System.IO.File.Exists(preferencesFilename))
+        {
+            try
+            {
+            string[] data = System.IO.File
+                            .ReadAllText(preferencesFilename)
+                            .Split(";");
+            musicEnabled = Convert.ToBoolean(data[0]);
+            musicVolume = Convert.ToSingle(data[1]);
+            SoundsEnabled = Convert.ToBoolean(data[2]);
+            SoundsVolume = Convert.ToSingle(data[3]);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.Message);
+            }
+            
+            return true;
+        }
+
+        return false;
     }
 }
