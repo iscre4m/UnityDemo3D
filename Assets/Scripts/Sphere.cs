@@ -5,6 +5,7 @@ public class Sphere : MonoBehaviour
     private Rigidbody rigidBody;
     private AudioSource hitWallSound;
     private AudioSource hitGateSound;
+    private AudioSource hitCheckpointSound;
     private Vector3 jump = Vector3.up * 200;
     private Vector3 forceDirection;
 
@@ -20,6 +21,7 @@ public class Sphere : MonoBehaviour
         var audioSources = GetComponents<AudioSource>();
         hitWallSound = audioSources[0];
         hitGateSound = audioSources[1];
+        hitCheckpointSound = audioSources[2];
     }
 
     void Update()
@@ -41,6 +43,8 @@ public class Sphere : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        hitCheckpointSound.volume = GameMenu.SoundsVolume;
+        hitCheckpointSound.Play();
         Destroy(other.gameObject);
     }
 
