@@ -3,18 +3,18 @@ using UnityEngine;
 public class FirstCheckpoint : MonoBehaviour
 {
     private const float START_TIME = 5;
+    private byte SCORE_VALUE = 5;
 
     [SerializeField]
-    private UnityEngine.UI.Image countdown;
+    private UnityEngine.UI.Image Countdown;
     
     private float countdownTime;
-    private GameObject firstGate;
-    private byte scoreValue = 5;
+    private GameObject FirstGate;
 
     void Start()
     {
         countdownTime = START_TIME;
-        firstGate = GameObject.Find("FirstGate");
+        FirstGate = GameObject.Find(nameof(FirstGate));
     }
 
     void Update()
@@ -30,8 +30,8 @@ public class FirstCheckpoint : MonoBehaviour
         }
 
         GameStat.FirstCheckpointFill =
-        countdown.fillAmount = countdownTime / START_TIME;
-        countdown.color = new Color(
+        Countdown.fillAmount = countdownTime / START_TIME;
+        Countdown.color = new Color(
             1 - GameStat.FirstCheckpointFill,
             GameStat.FirstCheckpointFill,
             .1f
@@ -40,8 +40,8 @@ public class FirstCheckpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        firstGate.SetActive(false);
+        FirstGate.SetActive(false);
         GameStat.SetFirstCheckpointStatus(true);
-        GameStat.GameScore += scoreValue;
+        GameStat.GameScore += SCORE_VALUE;
     }
 }

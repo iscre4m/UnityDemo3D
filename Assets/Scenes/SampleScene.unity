@@ -754,7 +754,7 @@ RectTransform:
   m_Children:
   - {fileID: 483075056}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2078,7 +2078,7 @@ Transform:
   - {fileID: 332860720}
   - {fileID: 1577289350}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &332860719
 GameObject:
@@ -2570,8 +2570,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1, y: 3, z: 1}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!23 &417673699
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2884,7 +2884,7 @@ RectTransform:
   - {fileID: 450037763}
   - {fileID: 794535885}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3425,7 +3425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff44cc8002b2d8d58945a721041f24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphere: {fileID: 1630929628}
+  Sphere: {fileID: 1630929628}
 --- !u!1 &637625676
 GameObject:
   m_ObjectHideFlags: 0
@@ -3523,6 +3523,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637625676}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &689396085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 689396086}
+  - component: {fileID: 689396087}
+  m_Layer: 0
+  m_Name: Ceiling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &689396086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689396085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &689396087
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689396085}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.2, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &694514361
 GameObject:
   m_ObjectHideFlags: 0
@@ -3589,7 +3634,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -4863,7 +4908,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92bc72a0a231223e1a404ee984a60b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphere: {fileID: 626470185}
+  Sphere: {fileID: 1630929628}
+  HeadLight: {fileID: 2041396075}
 --- !u!1 &992689930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4895,7 +4941,7 @@ Transform:
   - {fileID: 1275551188}
   - {fileID: 2094111348}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1000909565
 GameObject:
@@ -5901,7 +5947,7 @@ GameObject:
   - component: {fileID: 1193703190}
   m_Layer: 0
   m_Name: FirstCheckpoint
-  m_TagString: Checkpoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5984,7 +6030,7 @@ Transform:
   m_Children:
   - {fileID: 314633179}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1193703190
 MonoBehaviour:
@@ -5998,7 +6044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44f786682f8ac84293b4514ac6f7cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdown: {fileID: 7989735}
+  Countdown: {fileID: 7989735}
 --- !u!1 &1258993797
 GameObject:
   m_ObjectHideFlags: 0
@@ -8020,7 +8066,7 @@ GameObject:
   - component: {fileID: 1659763230}
   m_Layer: 0
   m_Name: FinalCheckpoint
-  m_TagString: Checkpoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8104,7 +8150,7 @@ Transform:
   - {fileID: 1161391908}
   - {fileID: 1429371901}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1659763230
 MonoBehaviour:
@@ -8118,7 +8164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e0d89c5c0387331a6f35c8c7bb7289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countdown: {fileID: 2066194223}
+  Countdown: {fileID: 2066194223}
 --- !u!1 &1698170265
 GameObject:
   m_ObjectHideFlags: 0
@@ -8480,7 +8526,7 @@ Transform:
   - {fileID: 626470186}
   - {fileID: 2041396077}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1847021040
 GameObject:
@@ -8497,7 +8543,7 @@ GameObject:
   - component: {fileID: 1847021045}
   m_Layer: 0
   m_Name: SecondCheckpoint
-  m_TagString: Checkpoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8581,7 +8627,7 @@ Transform:
   - {fileID: 1522522838}
   - {fileID: 1019919575}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1847021045
 MonoBehaviour:
@@ -9408,7 +9454,7 @@ Transform:
   - {fileID: 1906801644}
   - {fileID: 217112076}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2027961308
 GameObject:
@@ -9611,7 +9657,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2041396075}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a6e14b3ace4c194b904bbcb9081672d, type: 3}
+  m_Script: {fileID: 11500000, guid: fff44cc8002b2d8d58945a721041f24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Sphere: {fileID: 1630929628}
@@ -9820,7 +9866,7 @@ Transform:
   - {fileID: 1290639061}
   - {fileID: 1110789956}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2094111347
 GameObject:

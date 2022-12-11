@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Wall
   - Gate
-  - Checkpoint
   layers:
   - Default
   - TransparentFX

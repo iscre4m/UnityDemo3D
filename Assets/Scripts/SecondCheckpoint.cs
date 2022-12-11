@@ -3,6 +3,7 @@ using UnityEngine;
 public class SecondCheckpoint : MonoBehaviour
 {
     private const float START_TIME = 10;
+    private byte SCORE_VALUE = 15;
     
     public static bool IsActivated;
 
@@ -10,14 +11,13 @@ public class SecondCheckpoint : MonoBehaviour
     private UnityEngine.UI.Image Countdown;
     
     private float countdownTime;
-    private GameObject secondGate;
-    private byte scoreValue = 15;
+    private GameObject SecondGate;
 
     void Start()
     {
         SecondCheckpoint.IsActivated = false;
         countdownTime = START_TIME;
-        secondGate = GameObject.Find("SecondGate");
+        SecondGate = GameObject.Find(nameof(SecondGate));
     }
 
     void Update()
@@ -46,8 +46,8 @@ public class SecondCheckpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        secondGate.SetActive(false);
+        SecondGate.SetActive(false);
         GameStat.SetSecondCheckpointStatus(true);
-        GameStat.GameScore += scoreValue;
+        GameStat.GameScore += SCORE_VALUE;
     }
 }

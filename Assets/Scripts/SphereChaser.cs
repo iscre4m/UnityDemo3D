@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HeadLight : MonoBehaviour
+public class SphereChaser : MonoBehaviour
 {
     [SerializeField]
     private GameObject Sphere;
@@ -12,7 +12,7 @@ public class HeadLight : MonoBehaviour
         shift = transform.position - Sphere.transform.position;
     }
 
-    void LateUpdate()
+    void Update()
     {
         transform.position = Sphere.transform.position + shift;
     }

@@ -7,7 +7,7 @@ public class FinalCheckpoint : MonoBehaviour
     public static bool IsActivated;
 
     [SerializeField]
-    private UnityEngine.UI.Image countdown;
+    private UnityEngine.UI.Image Countdown;
 
     private float countdownTime;
     private byte scoreValue = 30;
@@ -15,9 +15,7 @@ public class FinalCheckpoint : MonoBehaviour
 
     void Start()
     {
-        FinalCheckpoint.IsActivated = false;
         countdownTime = START_TIME;
-        checkpointExpired = false;
     }
 
     void Update()
@@ -35,8 +33,8 @@ public class FinalCheckpoint : MonoBehaviour
             }
 
             GameStat.FinalCheckpointFill =
-            countdown.fillAmount = countdownTime / START_TIME;
-            countdown.color = new Color(
+            Countdown.fillAmount = countdownTime / START_TIME;
+            Countdown.color = new Color(
                 1 - GameStat.FinalCheckpointFill,
                 GameStat.FinalCheckpointFill,
                 .1f

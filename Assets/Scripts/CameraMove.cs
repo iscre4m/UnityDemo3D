@@ -3,9 +3,11 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     [SerializeField]
-    private GameObject sphere;
+    private GameObject Sphere;
+    [SerializeField]
+    private GameObject HeadLight;
 
-    private Vector3 cam_sphere;
+    private Vector3 sphereCam;
     private float zoom;
 
     private const float MIN_ZOOM = 0;
@@ -15,13 +17,14 @@ public class CameraMove : MonoBehaviour
     private const float MIN_VERTICAL = 25;
     private const float VERTICAL_SENS = 2;
     private const float HORIZONTAL_SENS = 4;
+    private const short HEAD_LIGHT_VERTICAL_ANGLE = 40;
 
     private float camAngleVertical;
     private float camAngleHorizontal;
 
     void Start()
     {
-        cam_sphere = transform.position - sphere.transform.position;
+        sphereCam = transform.position - Sphere.transform.position;
         zoom = 1;
         camAngleVertical = transform.eulerAngles.x;
         camAngleHorizontal = transform.eulerAngles.y;
@@ -59,7 +62,7 @@ public class CameraMove : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = sphere.transform.position + Quaternion.Euler(0, camAngleHorizontal, 0) * cam_sphere * zoom;
+        transform.position = Sphere.transform.position + Quaternion.Euler(0, camAngleHorizontal, 0) * sphereCam * zoom;
 
         transform.eulerAngles = new Vector3(
             camAngleVertical,
@@ -67,10 +70,8 @@ public class CameraMove : MonoBehaviour
             0
         );
 
-        var headLight = GameObject.Find("HeadLight");
-
-        headLight.transform.eulerAngles = new Vector3(
-            40,
+        HeadLight.transform.eulerAngles = new Vector3(
+            HEAD_LIGHT_VERTICAL_ANGLE,
             camAngleHorizontal,
             0
         );

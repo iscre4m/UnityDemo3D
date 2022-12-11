@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Sphere : MonoBehaviour
 {
-    private Rigidbody rigidBody;
-    private AudioSource hitWallSound;
-    private AudioSource hitGateSound;
-    private AudioSource hitCheckpointSound;
+    private Rigidbody RigidBody;
+    private AudioSource HitWallSound;
+    private AudioSource HitGateSound;
+    private AudioSource HitCheckpointSound;
     private Vector3 jump = Vector3.up * 200;
     private Vector3 forceDirection;
 
@@ -16,19 +16,19 @@ public class Sphere : MonoBehaviour
 
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody>();
+        RigidBody = GetComponent<Rigidbody>();
 
         var audioSources = GetComponents<AudioSource>();
-        hitWallSound = audioSources[0];
-        hitGateSound = audioSources[1];
-        hitCheckpointSound = audioSources[2];
+        HitWallSound = audioSources[0];
+        HitGateSound = audioSources[1];
+        HitCheckpointSound = audioSources[2];
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rigidBody.AddForce(jump);
+            RigidBody.AddForce(jump);
         }
         float fx = Input.GetAxis("Horizontal");
         float fy = Input.GetAxis("Vertical");
@@ -38,13 +38,13 @@ public class Sphere : MonoBehaviour
         forceDirection = forceDirection.normalized * fy;
         forceDirection += Camera.transform.right * fx;
 
-        rigidBody.AddForce(forceDirection * FORCE_AMPL);
+        RigidBody.AddForce(forceDirection * FORCE_AMPL);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        hitCheckpointSound.volume = GameMenu.SoundsVolume;
-        hitCheckpointSound.Play();
+        HitCheckpointSound.volume = GameMenu.SoundsVolume;  
+        HitCheckpointSound.Play();
         Destroy(other.gameObject);
     }
 
@@ -54,8 +54,8 @@ public class Sphere : MonoBehaviour
         {
             AudioSource sound = other.gameObject.tag switch
             {
-                "Wall" => hitWallSound,
-                "Gate" => hitGateSound,
+                "Wall" => HitWallSound,
+                "Gate" => HitGateSound,
                 _ => null
             };
             

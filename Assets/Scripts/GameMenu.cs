@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Text;
 
 public class GameMenu : MonoBehaviour
 {
@@ -137,6 +138,19 @@ public class GameMenu : MonoBehaviour
         }
     }
 
+    private static string CheckpointTimeToMessage(float time)
+    {
+        switch (time)
+        {
+            case -1:
+                return "in progress";
+            case 0:
+                return "failed";
+            default:
+                return $"passed at {time:00.0}";
+        }
+    }
+
     public static void Show(
         string messageText = "Game paused",
         string buttonText = "Continue"
@@ -145,47 +159,28 @@ public class GameMenu : MonoBehaviour
         MenuContainer.SetActive(true);
         Message.text = messageText;
         MenuButtonText.text = buttonText;
-        Stats.text = $"Time in game: {GameStat.GameTime:F1}\n";
-        Stats.text += $"First checkpoint: ";
-        switch (GameStat.FirstCheckpointTime)
+        StringBuilder statsBuilder = new();
+        statsBuilder.Append($"Time in game: {GameStat.GameTime:00.0}\n");
+        string number;
+        for (int i = 0; i < 3; ++i)
         {
-            case -1:
-                Stats.text += "in progress\n";
-                break;
-            case 0:
-                Stats.text += "failed\n";
-                break;
-            default:
-                Stats.text += $"passed at {GameStat.FirstCheckpointTime:F1}\n";
-                break;
+            number = i == 0 ? "First" : i == 1 ? "Second" : "Third";
+            statsBuilder.Append($"{number} checkpoint: ");
+            statsBuilder.Append(
+                CheckpointTimeToMessage(
+                    i == 0
+                    ? GameStat.FirstCheckpointTime
+                    : i == 1
+                      ? GameStat.SecondCheckpointTime
+                      : GameStat.FinalCheckpointTime
+                )
+            );
+            if (i < 2)
+            {
+                statsBuilder.Append("\n");
+            }
         }
-        Stats.text += $"Second checkpoint: ";
-        switch (GameStat.SecondCheckpointTime)
-        {
-            case -1:
-                Stats.text += "in progress\n";
-                break;
-            case 0:
-                Stats.text += "failed\n";
-                break;
-            default:
-                Stats.text += $"passed at {GameStat.SecondCheckpointTime:F1}\n";
-                break;
-        }
-        Stats.text += $"Final checkpoint: ";
-        switch (GameStat.FinalCheckpointTime)
-        {
-            case -1:
-                Stats.text += "in progress\n";
-                break;
-            case 0:
-                Stats.text += "failed\n";
-                break;
-            default:
-                Stats.text += $"passed at {GameStat.FinalCheckpointTime:F1}\n";
-                break;
-        }
-        Stats.text += $"Score: {GameStat.GameScore}";
+        Stats.text = statsBuilder.ToString();
         Time.timeScale = 0;
     }
 
@@ -208,13 +203,13 @@ public class GameMenu : MonoBehaviour
         {
             try
             {
-            string[] data = System.IO.File
-                            .ReadAllText(preferencesFilename)
-                            .Split(";");
-            musicEnabled = Convert.ToBoolean(data[0]);
-            musicVolume = Convert.ToSingle(data[1]);
-            SoundsEnabled = Convert.ToBoolean(data[2]);
-            SoundsVolume = Convert.ToSingle(data[3]);
+                string[] data = System.IO.File
+                                .ReadAllText(preferencesFilename)
+                                .Split(";");
+                musicEnabled = Convert.ToBoolean(data[0]);
+                musicVolume = Convert.ToSingle(data[1]);
+                SoundsEnabled = Convert.ToBoolean(data[2]);
+                SoundsVolume = Convert.ToSingle(data[3]);
             }
             catch (Exception ex)
             {
