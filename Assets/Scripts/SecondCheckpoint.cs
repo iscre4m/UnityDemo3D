@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SecondCheckpoint : MonoBehaviour
 {
-    private const float START_TIME = 10;
+    private const float START_TIME = 11;
     private byte SCORE_VALUE = 15;
     
     public static bool IsActivated;
@@ -16,7 +16,7 @@ public class SecondCheckpoint : MonoBehaviour
     void Start()
     {
         SecondCheckpoint.IsActivated = false;
-        countdownTime = START_TIME;
+        countdownTime = START_TIME - GameMenu.Difficulty;
         SecondGate = GameObject.Find(nameof(SecondGate));
     }
 
@@ -35,12 +35,17 @@ public class SecondCheckpoint : MonoBehaviour
             }
 
             GameStat.SecondCheckpointFill =
-            Countdown.fillAmount = countdownTime / START_TIME;
+            Countdown.fillAmount = countdownTime /
+            (START_TIME - GameMenu.Difficulty);
             Countdown.color = new Color(
                 1 - GameStat.SecondCheckpointFill,
                 GameStat.SecondCheckpointFill,
                 .1f
             );
+        }
+        else
+        {
+            countdownTime = START_TIME - GameMenu.Difficulty;
         }
     }
 

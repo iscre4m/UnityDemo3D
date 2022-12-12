@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FirstCheckpoint : MonoBehaviour
 {
-    private const float START_TIME = 5;
+    private const float START_TIME = 6;
     private byte SCORE_VALUE = 5;
 
     [SerializeField]
@@ -13,7 +13,7 @@ public class FirstCheckpoint : MonoBehaviour
 
     void Start()
     {
-        countdownTime = START_TIME;
+        countdownTime = START_TIME - GameMenu.Difficulty;
         FirstGate = GameObject.Find(nameof(FirstGate));
     }
 
@@ -30,7 +30,8 @@ public class FirstCheckpoint : MonoBehaviour
         }
 
         GameStat.FirstCheckpointFill =
-        Countdown.fillAmount = countdownTime / START_TIME;
+        Countdown.fillAmount = countdownTime /
+        (START_TIME - GameMenu.Difficulty);
         Countdown.color = new Color(
             1 - GameStat.FirstCheckpointFill,
             GameStat.FirstCheckpointFill,

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FinalCheckpoint : MonoBehaviour
 {
-    private const float START_TIME = 20;
+    private const float START_TIME = 21;
 
     public static bool IsActivated;
 
@@ -15,7 +15,7 @@ public class FinalCheckpoint : MonoBehaviour
 
     void Start()
     {
-        countdownTime = START_TIME;
+        countdownTime = START_TIME - GameMenu.Difficulty;
     }
 
     void Update()
@@ -33,12 +33,17 @@ public class FinalCheckpoint : MonoBehaviour
             }
 
             GameStat.FinalCheckpointFill =
-            Countdown.fillAmount = countdownTime / START_TIME;
+            Countdown.fillAmount = countdownTime /
+            (START_TIME - GameMenu.Difficulty);
             Countdown.color = new Color(
                 1 - GameStat.FinalCheckpointFill,
                 GameStat.FinalCheckpointFill,
                 .1f
             );
+        }
+        else
+        {
+            countdownTime = START_TIME - GameMenu.Difficulty;
         }
     }
 

@@ -6,6 +6,7 @@ public class GameMenu : MonoBehaviour
 {
     public static bool SoundsEnabled { get; private set; }
     public static float SoundsVolume { get; private set; }
+    public static byte Difficulty { get; private set; }
 
     private const string preferencesFilename = "Assets/Files/preferences.txt";
 
@@ -47,6 +48,9 @@ public class GameMenu : MonoBehaviour
         var SoundsVolumeSlider = GameObject
             .Find("SoundsVolumeSlider")
             .GetComponent<UnityEngine.UI.Slider>();
+        var DifficultySlider = GameObject
+            .Find("DifficultySlider")
+            .GetComponent<UnityEngine.UI.Slider>();
 
         if (LoadPreferences())
         {
@@ -54,6 +58,7 @@ public class GameMenu : MonoBehaviour
             MusicVolumeSlider.value = musicVolume;
             SoundsToggle.isOn = SoundsEnabled;
             SoundsVolumeSlider.value = SoundsVolume;
+            DifficultySlider.value = Difficulty;
         }
         else
         {
@@ -61,6 +66,7 @@ public class GameMenu : MonoBehaviour
             musicVolume = MusicVolumeSlider.value;
             SoundsEnabled = SoundsToggle.isOn;
             SoundsVolume = SoundsVolumeSlider.value;
+            Difficulty = (byte)DifficultySlider.value;
         }
 
         UpdateMusicState();
@@ -104,17 +110,25 @@ public class GameMenu : MonoBehaviour
         UpdateMusicState();
     }
 
-    public void MusicVolumeChanged(float value) {
+    public void MusicVolumeChanged(float value)
+    {
         musicVolume = value;
         UpdateMusicState();
     }
 
-    public void SoundsToggled(bool enabled) {
+    public void SoundsToggled(bool enabled)
+    {
         GameMenu.SoundsEnabled = enabled;
     }
 
-    public void SoundsVolumeChanged(float value) {
+    public void SoundsVolumeChanged(float value)
+    {
         GameMenu.SoundsVolume = value;
+    }
+
+    public void DifficultyChanged(float value)
+    {
+        GameMenu.Difficulty = (byte)value;
     }
     #endregion
 
@@ -194,7 +208,8 @@ public class GameMenu : MonoBehaviour
     {
         System.IO.File.WriteAllText(preferencesFilename,
             $"{musicEnabled};{musicVolume};" +
-            $"{GameMenu.SoundsEnabled};{GameMenu.SoundsVolume}"
+            $"{GameMenu.SoundsEnabled};{GameMenu.SoundsVolume};" +
+            $"{GameMenu.Difficulty}"
         );
     }
     private bool LoadPreferences()
@@ -210,6 +225,7 @@ public class GameMenu : MonoBehaviour
                 musicVolume = Convert.ToSingle(data[1]);
                 SoundsEnabled = Convert.ToBoolean(data[2]);
                 SoundsVolume = Convert.ToSingle(data[3]);
+                Difficulty = Convert.ToByte(data[4]);
             }
             catch (Exception ex)
             {
