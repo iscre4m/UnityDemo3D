@@ -14,11 +14,13 @@ public class GameMenu : MonoBehaviour
     private static TMPro.TextMeshProUGUI Message;
     private static TMPro.TextMeshProUGUI Stats;
     private static TMPro.TextMeshProUGUI MenuButtonText;
+    private static TMPro.TextMeshProUGUI Records;
 
     private AudioSource backgroundMusic;
 
     private bool musicEnabled;
     private float musicVolume;
+
 
     void Start()
     {
@@ -32,6 +34,9 @@ public class GameMenu : MonoBehaviour
             .GetComponent<TMPro.TextMeshProUGUI>();
         MenuButtonText = GameObject
             .Find(nameof(MenuButtonText))
+            .GetComponent<TMPro.TextMeshProUGUI>();
+        Records = GameObject
+            .Find(nameof(Records))
             .GetComponent<TMPro.TextMeshProUGUI>();
 
         backgroundMusic = GetComponent<AudioSource>();
@@ -81,7 +86,6 @@ public class GameMenu : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            
             if (MenuContainer.activeInHierarchy)
             {
                 GameMenu.Hide();
@@ -236,5 +240,10 @@ public class GameMenu : MonoBehaviour
         }
 
         return false;
+    }
+
+    public static void SetRecords()
+    {
+        Records.text = $"{GameStat.Records}";
     }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using UnityEngine;
 
 public class GameStat : MonoBehaviour
@@ -81,6 +83,10 @@ public class GameStat : MonoBehaviour
     }
     #endregion
 
+    private const string recordsDataFilename = "Assets/Files/records_data.json";
+
+    public static RecordsData Records;
+
     void Start()
     {
         GameStat.Clock = GameObject
@@ -98,6 +104,10 @@ public class GameStat : MonoBehaviour
         GameStat.FinalCheckpointImage = GameObject
             .Find(nameof(FinalCheckpointImage))
             .GetComponent<UnityEngine.UI.Image>();
+
+        Records = new RecordsData();
+        LoadStats();
+        GameMenu.SetRecords();
     }
 
     void LateUpdate()
@@ -170,8 +180,109 @@ public class GameStat : MonoBehaviour
 
     public static void SetFinalCheckpointStatus(bool status)
     {
-        FinalCheckpointTime = status ? _gameTime : 0;
+        FinalCheckpointTime = _gameTime;
         FinalCheckpointFill = 1;
         FinalCheckpointImage.color = status ? Color.green : Color.yellow;
+    }
+
+    public class RecordsData
+    {
+        public short[] Scores = { 0, 0, 0 };
+        public string[] CheckpointTimes = {
+            "0;0;0",
+            "0;0;0",
+            "0;0;0"
+        };
+
+        public override string ToString()
+        {
+            StringBuilder result = new();
+            string[] checkpointTimes;
+            for (int i = 0; i < 3; ++i)
+            {
+                result.Append(i == 0 ? "1st" : i == 1 ? "2nd" : "3rd");
+                result.Append("\n");
+                result.Append($"Score: {Records.Scores[i]}\n");
+                checkpointTimes = Records.CheckpointTimes[i].Split(';');
+                result.Append("1st checkpoint: ");
+                result.Append(
+                    checkpointTimes[0] == "0"
+                    ? "failed"
+                    : checkpointTimes[0]
+                );
+                result.Append($"\n2nd checkpoint: ");
+                result.Append(
+                    checkpointTimes[1] == "0"
+                    ? "failed"
+                    : checkpointTimes[1]
+                );
+                result.Append($"\n3rd checkpoint: ");
+                result.Append(
+                    checkpointTimes[2] == "0"
+                    ? "failed"
+                    : checkpointTimes[2]
+                );
+                if (i < 2)
+                {
+                    result.Append("\n\n");
+                }
+            }
+
+            return result.ToString();
+        }
+    }
+
+    public static void SaveStats()
+    {
+        for (int i = 0; i < 3; ++i)
+        {
+            if (_gameScore > Records.Scores[i]
+            || _gameScore == Records.Scores[i]
+            && GameStat.FinalCheckpointTime < Convert.ToSingle(
+                Records.CheckpointTimes[i].Split(';')[2]))
+            {
+                switch (i)
+                {
+                    case 0:
+                        for (int j = 0; j < 2; ++j)
+                        {
+                            Records.Scores[2 - j] =
+                            Records.Scores[1 - j];
+                            Records.CheckpointTimes[2 - j] =
+                            Records.CheckpointTimes[1 - j];
+                        }
+                        break;
+                    case 1:
+                        Records.Scores[2] = Records.Scores[1];
+                        Records.CheckpointTimes[2] =
+                        Records.CheckpointTimes[1];
+                        break;
+                    default:
+                        break;
+                }
+
+                Records.Scores[i] = _gameScore;
+                Records.CheckpointTimes[i] =
+                $"{GameStat.FirstCheckpointTime};" +
+                $"{GameStat.SecondCheckpointTime};" +
+                $"{GameStat.FinalCheckpointTime}";
+                break;
+            }
+        }
+
+        System.IO.File.WriteAllText(
+            recordsDataFilename,
+            JsonUtility.ToJson(Records, true)
+        );
+    }
+
+    private static void LoadStats()
+    {
+        if (System.IO.File.Exists(recordsDataFilename))
+        {
+            Records = JsonUtility.FromJson<RecordsData>(
+                System.IO.File.ReadAllText(recordsDataFilename)
+            );
+        }
     }
 }

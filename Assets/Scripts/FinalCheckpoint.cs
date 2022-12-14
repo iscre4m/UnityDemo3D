@@ -54,6 +54,11 @@ public class FinalCheckpoint : MonoBehaviour
             GameStat.SetFinalCheckpointStatus(true);
         }
 
-        GameStat.GameScore += checkpointExpired ? (byte)(scoreValue / 2) : scoreValue;
+        GameStat.GameScore +=
+        checkpointExpired
+        ? (byte)(scoreValue / 2)
+        : scoreValue;
+        
+        GameStat.SaveStats();
     }
 }
