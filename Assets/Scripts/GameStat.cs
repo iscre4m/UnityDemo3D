@@ -232,8 +232,10 @@ public class GameStat : MonoBehaviour
         }
     }
 
-    public static void SaveStats()
+    public static int CheckForRecord()
     {
+        int result = -1;
+
         for (int i = 0; i < 3; ++i)
         {
             if (_gameScore > Records.Scores[i]
@@ -241,34 +243,25 @@ public class GameStat : MonoBehaviour
             && GameStat.FinalCheckpointTime < Convert.ToSingle(
                 Records.CheckpointTimes[i].Split(';')[2]))
             {
-                switch (i)
-                {
-                    case 0:
-                        for (int j = 0; j < 2; ++j)
-                        {
-                            Records.Scores[2 - j] =
-                            Records.Scores[1 - j];
-                            Records.CheckpointTimes[2 - j] =
-                            Records.CheckpointTimes[1 - j];
-                        }
-                        break;
-                    case 1:
-                        Records.Scores[2] = Records.Scores[1];
-                        Records.CheckpointTimes[2] =
-                        Records.CheckpointTimes[1];
-                        break;
-                    default:
-                        break;
-                }
+                result = i;
+            }
+        }
 
-                Records.Scores[i] = _gameScore;
-                Records.CheckpointTimes[i] =
+        return result;
+    }
+
+    public static void SaveStats()
+    {
+        int recordStatus = CheckForRecord();
+        if (recordStatus != -1)
+        {
+            Records.Scores[recordStatus] = _gameScore;
+                Records.CheckpointTimes[recordStatus] =
                 $"{GameStat.FirstCheckpointTime};" +
                 $"{GameStat.SecondCheckpointTime};" +
                 $"{GameStat.FinalCheckpointTime}";
-                break;
-            }
         }
+        
 
         System.IO.File.WriteAllText(
             recordsDataFilename,

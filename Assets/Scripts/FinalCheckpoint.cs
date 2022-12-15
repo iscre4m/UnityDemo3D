@@ -60,5 +60,6 @@ public class FinalCheckpoint : MonoBehaviour
         : scoreValue;
         
         GameStat.SaveStats();
+        EndGameMenu.Show();
     }
 }
