@@ -1,1 +1,1 @@
-False;0.2;False;0;0
+False;0.2;True;0.5425539;1
